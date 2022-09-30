@@ -107,7 +107,7 @@ void FieldGenerator::GenerateDescriptorInitializerGeneric(io::Printer* printer,
 							  const std::string &descriptor_addr) const
 {
   std::map<std::string, std::string> variables;
-  const OneofDescriptor *oneof = descriptor_->containing_oneof();
+  const OneofDescriptor *oneof = descriptor_->real_containing_oneof();
   const ProtobufCFileOptions opt = descriptor_->file()->options().GetExtension(pb_c_file);
   variables["TYPE"] = type_macro;
   variables["classname"] = FullNameToC(FieldScope(descriptor_)->full_name(), FieldScope(descriptor_)->file());

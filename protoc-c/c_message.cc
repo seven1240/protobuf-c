@@ -191,7 +191,7 @@ GenerateStructDefinition(io::Printer* printer) {
   printer->Indent();
   for (int i = 0; i < descriptor_->field_count(); i++) {
     const FieldDescriptor *field = descriptor_->field(i);
-    if (field->containing_oneof() == NULL) {
+    if (field->real_containing_oneof() == NULL) {
       SourceLocation fieldSourceLoc;
       field->GetSourceLocation(&fieldSourceLoc);
 
