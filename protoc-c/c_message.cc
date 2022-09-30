@@ -149,7 +149,7 @@ GenerateStructDefinition(io::Printer* printer) {
   }
 
   // Generate the case enums for unions
-  for (int i = 0; i < descriptor_->oneof_decl_count(); i++) {
+  for (int i = 0; i < descriptor_->real_oneof_decl_count(); i++) {
     const OneofDescriptor *oneof = descriptor_->oneof_decl(i);
     vars["opt_comma"] = ",";
 
@@ -202,7 +202,7 @@ GenerateStructDefinition(io::Printer* printer) {
   }
 
   // Generate unions from oneofs.
-  for (int i = 0; i < descriptor_->oneof_decl_count(); i++) {
+  for (int i = 0; i < descriptor_->real_oneof_decl_count(); i++) {
     const OneofDescriptor *oneof = descriptor_->oneof_decl(i);
     vars["oneofname"] = CamelToLower(oneof->name());
     vars["foneofname"] = FullNameToC(oneof->full_name(), oneof->file());
@@ -238,12 +238,12 @@ GenerateStructDefinition(io::Printer* printer) {
 		       " { PROTOBUF_C_MESSAGE_INIT (&$lcclassname$__descriptor) \\\n    ");
   for (int i = 0; i < descriptor_->field_count(); i++) {
     const FieldDescriptor *field = descriptor_->field(i);
-    if (field->containing_oneof() == NULL) {
+    if (field->real_containing_oneof() == NULL) {
       printer->Print(", ");
       field_generators_.get(field).GenerateStaticInit(printer);
     }
   }
-  for (int i = 0; i < descriptor_->oneof_decl_count(); i++) {
+  for (int i = 0; i < descriptor_->real_oneof_decl_count(); i++) {
     const OneofDescriptor *oneof = descriptor_->oneof_decl(i);
     vars["foneofname"] = FullNameToUpper(oneof->full_name(), oneof->file());
     // Initialize the case enum
